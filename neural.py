@@ -31,6 +31,7 @@ print()
 model = educateNeural.educate(np, x_train, y_train, x_val, y_val, model, REVERSE, ctable)
 model.save('my_model.h5')'''
 model = load_model('my_model.h5')
+#model.save('my_model.h5')
 
 
 # Погружаем данные в виде '312+214', ' 12+214', '  12+21', ...
@@ -42,3 +43,4 @@ def calc(input_data):
 
 
 print(calc('3+2'))  #тестовый вызов функции
+
