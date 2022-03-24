@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-import neural
+#import neural
 
 
 # neural.start()
@@ -17,6 +17,7 @@ Window.title('Калькулятор')
 Window.resizable(1, 1)
 Window.config()
 Window['bg'] = 'green'
+
 
 def add_digit(digit):
 	value = Calc.get()
@@ -42,7 +43,7 @@ def add_operation(operation):
 
 
 def calculate():
-	value = Calc.get()
+	value = Calc.get()#  здесь ввод числа
 	if value[-1] in '+-/*':
 		value += value[:-1]
 	Calc['state'] = tk.NORMAL
@@ -58,13 +59,11 @@ def calculate():
 	Calc['state'] = tk.DISABLED
 
 
-
 def Clear():
 	Calc['state'] = tk.NORMAL
 	Calc.delete(0, tk.END)
 	Calc.insert(0, 0)
 	Calc['state'] = tk.DISABLED
-
 
 
 def press_key(event):
@@ -78,6 +77,7 @@ def press_key(event):
 
 def make_button(digit):
 	return tk.Button(text = digit, bd = 5, font = ('Arial', 13), command = lambda : add_digit(digit))
+
 
 def simple_operation(operation):
 	return tk.Button(text = operation, bd = 5, font = ('Arial', 13), command = lambda : add_operation(operation))
