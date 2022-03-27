@@ -1,55 +1,44 @@
-from tensorflow import keras
-from keras import layers
 import numpy as np
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Activation
 from keras.models import load_model
-from modules import generationData, vectorizationData, buildModel, educateNeural
 
 
-chars = "0123456789+ "
-
-# Параметры для модели и набора данных.
-TRAINING_SIZE = 50000
-DIGITS = 3
-REVERSE = True
-
-# Максимальная длина ввода равна 'int + int' (например, '345+678'). Максимальная его длина - ЦИФРЫ.
-MAXLEN = DIGITS + 1 + DIGITS
-
-
-questions, expected, ctable = generationData.gen(np, chars, TRAINING_SIZE, DIGITS, REVERSE, MAXLEN)
-
-#print(questions)
-
-x_train, y_train, x_val, y_val = vectorizationData.vect(np, questions, expected, ctable, chars, DIGITS, MAXLEN)
-
-print()
-
-#model = buildModel.build(keras, layers, DIGITS, MAXLEN, chars)
-
-print()
-
-#model = educateNeural.educate(np, x_train, y_train, x_val, y_val, model, REVERSE, ctable)
-model = load_model('my_model.h5')
-#model.save('my_model.h5')
+def generate_neural_network():
+    # Модель Sequential представляет собой линейный стек слоев.
+    # В качестве входных данных можно использовать массив narray.
+    # Что бы создать нейронную сеть. Надо объявить модель Sequential добавить на неё слои:
+    model = Sequential()
+    model.add(Dense(3, input_shape=(2,), activation='relu'))
+    model.add(Dense(6, activation='relu'))
+    model.add(Dense(3, activation='relu'))
+    model.add(Dense(1, activation='elu'))
+    # где 3/6/3/1 – количество нейронов, input_shape – размерность входных данных, activation – функция активации
+    model.compile(loss='mse', optimizer='adam')  # ошибка - среднеквадратичная
+    return model
 
 
-# Погружаем данные в виде '312+214', ' 12+214', '  12+21', ...
-# Пока не понятен тип данных на вход
-def calc(input_data):
-    ind = np.random.randint(0, len(x_val))
-    question = np.array(input_data.split('+'), dtype='int')
-    rowx, rowy = x_val[np.array(question)], y_val[np.array([ind])]
-    preds = np.argmax(model.predict(rowx), axis=-1)
-    q = input_data
-    correct = ctable.decode(rowy[0])
-    guess = ctable.decode(preds[0], calc_argmax=False)
-    print("Q", q[::-1] if REVERSE else q, end=" ")
-    print("T", correct, end=" ")
-    print("☑ " + guess)
+def learning_model(self):
+    # Формирование numpy-массива для обучения
+    x = np.random.randint(1000, size=(10000, 2))
+    y = np.transpose(sum(np.transpose(x)))  # ответы для массива обучения (на сложение)
+    self.fit(x, y, epochs=100)  # обучение
+    return model
 
-    '''question = np.array(input_data.split('+'), dtype='float32')
+
+if __name__ == '__main__':
+    '''model = generate_neural_network()
+    model = learning_model(model)
+    model.save('additional.h5')''' # эти строки создавали и обучали модель для сложения чисел в диапазоне от 0 до 1000
+    model = load_model('additional.h5')
+
+
+def addition(input_data):  # функция сложения, входные данные в формате 'x+y'
+    question_row = np.array(input_data.split('+'), dtype='float32')
+    question = np.reshape(question_row, [1, 2])
     answ = model.predict(question)  # этот вызывает ошибку - неверный ввод
-    return answ  # передать на выход'''
+    return answ  # передать на выход
 
 
-print(calc('3+2'))  #тестовый вызов функции
+print(addition('1+2'))  # тестовый вызов функции
