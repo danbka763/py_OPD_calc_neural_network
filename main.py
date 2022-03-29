@@ -41,12 +41,17 @@ def add_operation(operation):
 
 def calculate():
 	value = Calc.get()  #здесь ввод числа
+	if value[0] == '-':
+		value += Calc.get() #поптыка сделать возможным наличие первого отрицательного числа (провалено)
+	print('VALUE = ' + value)
 	if '+' in value:
 		answer = neural.addition(value)
-	elif ('-' in value) and ('*' not in value):
+	elif ('-' in value) and ('*' not in value) and ('/' not in value):
 		answer = neural.subtraction(value)
 	elif '*' in value:
 		answer = neural.multiplication(value)
+	elif '/' in value:
+		answer = neural.division(value)
 	if value[-1] in '+-/*':
 		value += value[:-1]
 	Calc['state'] = tk.NORMAL
