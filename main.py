@@ -1,10 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-#import neural
-
-
-# neural.start()
+import neural
 
 
 height = 800
@@ -43,13 +40,19 @@ def add_operation(operation):
 
 
 def calculate():
-	value = Calc.get()#  здесь ввод числа
+	value = Calc.get()  #здесь ввод числа
+	if '+' in value:
+		answer = neural.addition(value)  #эта херня делает сумму
+	elif '-' in value:
+		answer = neural.subtraction(value)
+	elif '*' in value:
+		answer = neural.multiplication(value)
 	if value[-1] in '+-/*':
 		value += value[:-1]
 	Calc['state'] = tk.NORMAL
 	Calc.delete(0, tk.END)
 	try:
-		Calc.insert(0, eval(value))
+		Calc.insert(0, answer)
 	except (NameError, SyntaxError):
 		messagebox.showinfo('ВНИМАНИЕ!!!','Введите только цифры!!!')
 		Calc.insert(0, 0)
@@ -96,7 +99,6 @@ def make_clear(operation):
 # canvas = Canvas(Window, width = width, height = height)
 # canvas.pack(fill = 'both', expand = True)
 # canvas.create_image(0, 0, image = Picture_Back_Ground, anchor = 'nw')
-
 
 
 Window.bind('<Key>', press_key)
