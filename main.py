@@ -42,8 +42,8 @@ def add_operation(operation):
 def calculate():
 	value = Calc.get()  #здесь ввод числа
 	if '+' in value:
-		answer = neural.addition(value)  #эта херня делает сумму
-	elif '-' in value:
+		answer = neural.addition(value)
+	elif ('-' in value) and ('*' not in value):
 		answer = neural.subtraction(value)
 	elif '*' in value:
 		answer = neural.multiplication(value)
