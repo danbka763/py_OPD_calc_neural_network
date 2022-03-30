@@ -61,7 +61,6 @@ def subtraction(input_data):  # функция вычитания, входны�
         messagebox.showinfo('Ошибка', 'Обнулите калькулятор и вводите снова\nНе стоит первому числу быть отрицательным')
     if first_negative:
         question[0][0] = 0 - question[0][0]
-    print(question)
     answ = model_for_subtraction.predict(question)
     if question[0][0] >= question[0][1]:
         return round(answ[0][0])

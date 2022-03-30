@@ -43,7 +43,6 @@ def calculate():
 	value = Calc.get()  #здесь ввод числа
 	if value[0] == '-':
 		value += Calc.get() #поптыка сделать возможным наличие первого отрицательного числа (провалено)
-	print('VALUE = ' + value)
 	if '+' in value:
 		answer = neural.addition(value)
 	elif ('-' in value) and ('*' not in value) and ('/' not in value):
