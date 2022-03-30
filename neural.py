@@ -71,7 +71,6 @@ def subtraction(input_data):  # функция вычитания, входны�
 def multiplication(input_data):  # функция умножения, входные данные в формате 'x*y'
     question_row = np.array(input_data.split('*'), dtype='float32')
     question = np.reshape(question_row, [1, 2])
-    print(question)
     if (question[0][0] < 0 and question[0][1] < 0) or (question[0][0] > 0 and question[0][1] > 0):
         negative = False
     else:
