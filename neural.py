@@ -71,6 +71,7 @@ def subtraction(input_data):  # функция вычитания, входны�
 def multiplication(input_data):  # функция умножения, входные данные в формате 'x*y'
     question_row = np.array(input_data.split('*'), dtype='float32')
     question = np.reshape(question_row, [1, 2])
+    print(question)
     if (question[0][0] < 0 and question[0][1] < 0) or (question[0][0] > 0 and question[0][1] > 0):
         negative = False
     else:
@@ -95,8 +96,14 @@ def multiplication(input_data):  # функция умножения, входн
 def division(input_data):
     question_row = np.array(input_data.split('/'), dtype='float32')
     question = np.reshape(question_row, [1, 2])
+    if question[0][1] == 0:
+        messagebox.showinfo('Ошибка', 'Не стоит делить на ноль')
+        return 0
+    if question[0][0] == 0:
+        return 0
     last = question[0][0]
     n = 0
+
     while True:
         last -= question[0][1]
         n += 1
